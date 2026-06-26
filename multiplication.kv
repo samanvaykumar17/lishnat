@@ -1,0 +1,49 @@
+<QuizScreen>:
+    orientation: "vertical"
+    padding: 20
+    spacing: 15
+
+    Label:
+        text: "Lisha Natalia ki pitaai"
+        font_size: "28sp"
+        size_hint_y: 0.15
+
+    Label:
+        text: "Score: " + str(root.score)
+        font_size: "22sp"
+        size_hint_y: 0.1
+
+    Label:
+        text: root.question_text
+        font_size: "30sp"
+        halign: "center"
+        valign: "middle"
+        text_size: self.size
+        size_hint_y: 0.25
+
+    TextInput:
+        id: answer_input
+        multiline: False
+        input_filter: "int"
+        font_size: "28sp"
+        size_hint_y: 0.15
+
+    Button:
+        id: submit_btn
+        text: "Submit"
+        font_size: "24sp"
+        size_hint_y: 0.15
+        on_release: root.submit_answer()
+
+    Button:
+        id: play_again_btn
+        text: "Play Again"
+        font_size: "24sp"
+        size_hint_y: 0.15
+        disabled: True
+        on_release: root.reset_game()
+
+    Label:
+        text: root.status_text
+        font_size: "20sp"
+        size_hint_y: 0.15
