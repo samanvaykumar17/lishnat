@@ -1,7 +1,7 @@
 <QuizScreen>:
     orientation: "vertical"
-    padding: 12
-    spacing: 10
+    padding: "12dp"
+    spacing: "10dp"
 
     Label:
         text: "Multiplication Quiz"
@@ -17,13 +17,19 @@
         height: "40dp"
 
     Label:
+        text: "Time: " + root.time_text
+        font_size: "22sp"
+        size_hint_y: None
+        height: "40dp"
+
+    Label:
         text: root.question_text
         font_size: "34sp"
         halign: "center"
         valign: "middle"
         text_size: self.size
         size_hint_y: None
-        height: "100dp"
+        height: "120dp"
 
     TextInput:
         id: answer_input
@@ -31,14 +37,14 @@
         readonly: True
         cursor_blink: False
         halign: "center"
-        font_size: "34sp"
+        font_size: "36sp"
         size_hint_y: None
-        height: "55dp"
+        height: "60dp"
 
     GridLayout:
         cols: 3
-        spacing: 6
-        size_hint_y: 0.55
+        spacing: "6dp"
+        size_hint_y: 1
 
         Button:
             text: "1"
