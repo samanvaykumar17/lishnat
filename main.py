@@ -27,21 +27,31 @@ class QuizScreen(BoxLayout):
             f"{self.a} × {self.b} = ?"
         )
 
+        self.ids.answer_input.text = ""
+
+    # ---------- Number Pad ----------
+    def add_digit(self, digit):
+        self.ids.answer_input.text += str(digit)
+
+    def backspace(self):
+        self.ids.answer_input.text = self.ids.answer_input.text[:-1]
+
+    def clear_answer(self):
+        self.ids.answer_input.text = ""
+
+    # ---------- Submit ----------
     def submit_answer(self):
         answer = self.ids.answer_input.text.strip()
 
         try:
             if int(answer) == self.a * self.b:
                 self.score += 1
-                self.status_text = "Correct!"
+                self.status_text = "✅ Correct!"
             else:
-                self.status_text = (
-                    f"Wrong! Answer was {self.a * self.b}"
-                )
+                self.status_text = f"❌ Wrong! Answer = {self.a * self.b}"
         except ValueError:
-            self.status_text = "Enter a number"
-
-        self.ids.answer_input.text = ""
+            self.status_text = "Enter an answer."
+            return
 
         if self.current_question < self.total_questions - 1:
             self.current_question += 1
@@ -50,7 +60,7 @@ class QuizScreen(BoxLayout):
             self.show_result()
 
     def show_result(self):
-        self.question_text = f"Quiz Complete!\nScore: {self.score}/10"
+        self.question_text = f"Quiz Finished!\n\nScore: {self.score}/10"
 
         if self.score == 10:
             self.status_text = "🎉 You Win!"
@@ -64,8 +74,10 @@ class QuizScreen(BoxLayout):
         self.score = 0
         self.current_question = 0
         self.status_text = ""
+
         self.ids.submit_btn.disabled = False
         self.ids.play_again_btn.disabled = True
+
         self.next_question()
 
 
