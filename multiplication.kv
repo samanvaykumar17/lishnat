@@ -1,133 +1,178 @@
-<QuizScreen>:
-    orientation: "vertical"
-    padding: "12dp"
-    spacing: "10dp"
+<HomeScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: "24dp"
+        spacing: "20dp"
 
-    Label:
-        text: "Multiplication Quiz"
-        font_size: "28sp"
-        bold: True
-        size_hint_y: None
-        height: "50dp"
+        Label:
+            text: "Math Quiz"
+            font_size: "32sp"
+            bold: True
 
-    Label:
-        text: "Score: " + str(root.score)
-        font_size: "22sp"
-        size_hint_y: None
-        height: "40dp"
-
-    Label:
-        text: "Time: " + root.time_text
-        font_size: "22sp"
-        size_hint_y: None
-        height: "40dp"
-
-    Label:
-        text: root.question_text
-        font_size: "34sp"
-        halign: "center"
-        valign: "middle"
-        text_size: self.size
-        size_hint_y: None
-        height: "120dp"
-
-    TextInput:
-        id: answer_input
-        multiline: False
-        readonly: True
-        cursor_blink: False
-        halign: "center"
-        font_size: "36sp"
-        size_hint_y: None
-        height: "60dp"
-
-    GridLayout:
-        cols: 3
-        spacing: "6dp"
-        size_hint_y: 1
-
-        Button:
-            text: "1"
-            font_size: "28sp"
-            on_release: root.add_digit(1)
-
-        Button:
-            text: "2"
-            font_size: "28sp"
-            on_release: root.add_digit(2)
-
-        Button:
-            text: "3"
-            font_size: "28sp"
-            on_release: root.add_digit(3)
-
-        Button:
-            text: "4"
-            font_size: "28sp"
-            on_release: root.add_digit(4)
-
-        Button:
-            text: "5"
-            font_size: "28sp"
-            on_release: root.add_digit(5)
-
-        Button:
-            text: "6"
-            font_size: "28sp"
-            on_release: root.add_digit(6)
-
-        Button:
-            text: "7"
-            font_size: "28sp"
-            on_release: root.add_digit(7)
-
-        Button:
-            text: "8"
-            font_size: "28sp"
-            on_release: root.add_digit(8)
-
-        Button:
-            text: "9"
-            font_size: "28sp"
-            on_release: root.add_digit(9)
-
-        Button:
-            text: "⌫"
-            font_size: "28sp"
-            on_release: root.backspace()
-
-        Button:
-            text: "0"
-            font_size: "28sp"
-            on_release: root.add_digit(0)
-
-        Button:
-            text: "Clear"
+        Label:
+            text: "Choose an option"
             font_size: "22sp"
-            on_release: root.clear_answer()
+            size_hint_y: None
+            height: "40dp"
 
-    Button:
-        id: submit_btn
-        text: "Submit"
-        font_size: "24sp"
-        size_hint_y: None
-        height: "55dp"
-        on_release: root.submit_answer()
+        Widget:
 
-    Button:
-        id: play_again_btn
-        text: "Play Again"
-        font_size: "24sp"
-        size_hint_y: None
-        height: "55dp"
-        disabled: True
-        on_release: root.reset_game()
+        Button:
+            text: "Multiplication"
+            font_size: "26sp"
+            size_hint_y: None
+            height: "70dp"
+            on_release: root.start_quiz("multiplication")
 
-    Label:
-        text: root.status_text
-        font_size: "20sp"
-        halign: "center"
-        valign: "middle"
-        text_size: self.size
-        size_hint_y: None
-        height: "40dp"
+        Button:
+            text: "Division"
+            font_size: "26sp"
+            size_hint_y: None
+            height: "70dp"
+            on_release: root.start_quiz("division")
+
+        Widget:
+
+<QuizScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: "12dp"
+        spacing: "10dp"
+
+        BoxLayout:
+            size_hint_y: None
+            height: "50dp"
+            spacing: "8dp"
+
+            Button:
+                text: "Home"
+                size_hint_x: None
+                width: "90dp"
+                on_release: root.back_to_home()
+
+            Label:
+                text: root.title_text
+                font_size: "28sp"
+                bold: True
+
+        Label:
+            text: "Score: " + str(root.score)
+            font_size: "22sp"
+            size_hint_y: None
+            height: "40dp"
+
+        Label:
+            text: "Time: " + root.time_text
+            font_size: "22sp"
+            size_hint_y: None
+            height: "40dp"
+
+        Label:
+            text: root.question_text
+            font_size: "34sp"
+            halign: "center"
+            valign: "middle"
+            text_size: self.size
+            size_hint_y: None
+            height: "120dp"
+
+        TextInput:
+            id: answer_input
+            multiline: False
+            readonly: True
+            cursor_blink: False
+            halign: "center"
+            font_size: "36sp"
+            size_hint_y: None
+            height: "60dp"
+
+        GridLayout:
+            cols: 3
+            spacing: "6dp"
+            size_hint_y: 1
+
+            Button:
+                text: "1"
+                font_size: "28sp"
+                on_release: root.add_digit(1)
+
+            Button:
+                text: "2"
+                font_size: "28sp"
+                on_release: root.add_digit(2)
+
+            Button:
+                text: "3"
+                font_size: "28sp"
+                on_release: root.add_digit(3)
+
+            Button:
+                text: "4"
+                font_size: "28sp"
+                on_release: root.add_digit(4)
+
+            Button:
+                text: "5"
+                font_size: "28sp"
+                on_release: root.add_digit(5)
+
+            Button:
+                text: "6"
+                font_size: "28sp"
+                on_release: root.add_digit(6)
+
+            Button:
+                text: "7"
+                font_size: "28sp"
+                on_release: root.add_digit(7)
+
+            Button:
+                text: "8"
+                font_size: "28sp"
+                on_release: root.add_digit(8)
+
+            Button:
+                text: "9"
+                font_size: "28sp"
+                on_release: root.add_digit(9)
+
+            Button:
+                text: "⌫"
+                font_size: "28sp"
+                on_release: root.backspace()
+
+            Button:
+                text: "0"
+                font_size: "28sp"
+                on_release: root.add_digit(0)
+
+            Button:
+                text: "Clear"
+                font_size: "22sp"
+                on_release: root.clear_answer()
+
+        Button:
+            id: submit_btn
+            text: "Submit"
+            font_size: "24sp"
+            size_hint_y: None
+            height: "55dp"
+            on_release: root.submit_answer()
+
+        Button:
+            id: play_again_btn
+            text: "Play Again"
+            font_size: "24sp"
+            size_hint_y: None
+            height: "55dp"
+            disabled: True
+            on_release: root.reset_game()
+
+        Label:
+            text: root.status_text
+            font_size: "20sp"
+            halign: "center"
+            valign: "middle"
+            text_size: self.size
+            size_hint_y: None
+            height: "40dp"

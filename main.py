@@ -3,14 +3,24 @@ import random
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import NumericProperty, StringProperty
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import Screen, ScreenManager
 
 
-class QuizScreen(BoxLayout):
+class HomeScreen(Screen):
+    def start_quiz(self, mode):
+        quiz_screen = self.manager.get_screen("quiz")
+        quiz_screen.mode = mode
+        quiz_screen.reset_game()
+        self.manager.current = "quiz"
+
+
+class QuizScreen(Screen):
     score = NumericProperty(0)
     question_text = StringProperty("")
     status_text = StringProperty("")
     time_text = StringProperty("00.0")
+    mode = StringProperty("multiplication")
+    title_text = StringProperty("Multiplication Quiz")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -20,12 +30,13 @@ class QuizScreen(BoxLayout):
 
         self.a = 0
         self.b = 0
+        self.expected_answer = 0
 
         self.elapsed = 0.0
 
-        Clock.schedule_interval(self.update_timer, 0.1)
-
-        self.next_question()
+    def back_to_home(self):
+        Clock.unschedule(self.update_timer)
+        self.manager.current = "home"
 
     # ---------------- Timer ----------------
 
@@ -40,12 +51,22 @@ class QuizScreen(BoxLayout):
     # ---------------- Questions ----------------
 
     def next_question(self):
-        self.a = random.randint(2, 9)
-        self.b = random.randint(2, 9)
+        if self.mode == "division":
+            self.b = random.randint(2, 9)
+            self.expected_answer = random.randint(2, 9)
+            self.a = self.b * self.expected_answer
+            expression = f"{self.a} / {self.b} = ?"
+            self.title_text = "Division Quiz"
+        else:
+            self.a = random.randint(2, 9)
+            self.b = random.randint(2, 9)
+            self.expected_answer = self.a * self.b
+            expression = f"{self.a} x {self.b} = ?"
+            self.title_text = "Multiplication Quiz"
 
         self.question_text = (
             f"Question {self.current_question + 1}/{self.total_questions}\n"
-            f"{self.a} × {self.b} = ?"
+            f"{expression}"
         )
 
         self.ids.answer_input.text = ""
@@ -70,11 +91,14 @@ class QuizScreen(BoxLayout):
         if txt == "":
             return
 
-        if int(txt) == self.a * self.b:
+        if int(txt) == self.expected_answer:
             self.score += 1
-            self.status_text = "✅ Correct"
+            self.status_text = "Correct"
         else:
-            self.status_text = f"❌ {self.a} × {self.b} = {self.a*self.b}"
+            if self.mode == "division":
+                self.status_text = f"{self.a} / {self.b} = {self.expected_answer}"
+            else:
+                self.status_text = f"{self.a} x {self.b} = {self.expected_answer}"
 
         if self.current_question < self.total_questions - 1:
             self.current_question += 1
@@ -95,7 +119,7 @@ class QuizScreen(BoxLayout):
         )
 
         if self.score == 10:
-            self.status_text = "🎉 YOU WIN!"
+            self.status_text = "YOU WIN!"
         else:
             self.status_text = "Tap Play Again"
 
@@ -125,7 +149,10 @@ class QuizScreen(BoxLayout):
 
 class MultiplicationApp(App):
     def build(self):
-        return QuizScreen()
+        manager = ScreenManager()
+        manager.add_widget(HomeScreen(name="home"))
+        manager.add_widget(QuizScreen(name="quiz"))
+        return manager
 
 
 if __name__ == "__main__":
