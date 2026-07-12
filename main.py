@@ -57,6 +57,18 @@ class QuizScreen(Screen):
             self.a = self.b * self.expected_answer
             expression = f"{self.a} / {self.b} = ?"
             self.title_text = "Division Quiz"
+        elif self.mode == "addition":
+            self.a = random.randint(10, 99)
+            self.b = random.randint(1, 9)
+            self.expected_answer = self.a + self.b
+            expression = f"{self.a} + {self.b} = ?"
+            self.title_text = "Addition Quiz"
+        elif self.mode == "subtraction":
+            self.a = random.randint(10, 99)
+            self.b = random.randint(1, 9)
+            self.expected_answer = self.a - self.b
+            expression = f"{self.a} - {self.b} = ?"
+            self.title_text = "Subtraction Quiz"
         else:
             self.a = random.randint(2, 9)
             self.b = random.randint(2, 9)
@@ -97,6 +109,10 @@ class QuizScreen(Screen):
         else:
             if self.mode == "division":
                 self.status_text = f"{self.a} / {self.b} = {self.expected_answer}"
+            elif self.mode == "addition":
+                self.status_text = f"{self.a} + {self.b} = {self.expected_answer}"
+            elif self.mode == "subtraction":
+                self.status_text = f"{self.a} - {self.b} = {self.expected_answer}"
             else:
                 self.status_text = f"{self.a} x {self.b} = {self.expected_answer}"
 
